@@ -25,7 +25,7 @@ CREATE OR REPLACE FUNCTION prop_owner_attr(a_pogc TEXT DEFAULT NULL, a_poid INTE
 $_$
 -- a_pogc: код группы владельцев
 -- a_poid: код владельца свойства
-  SELECT * FROM prop_owner_attr
+  SELECT * FROM cfg.prop_owner_attr
   WHERE COALESCE($1, pogc) = pogc
     AND $2 IN (0, poid)
 $_$;
@@ -37,7 +37,7 @@ $_$
 -- a_pogc: код группы владельцев
 -- a_poid: код владельца свойств
 -- a_code: код свойства
-  SELECT * FROM prop_attr
+  SELECT * FROM cfg.prop_attr
   WHERE COALESCE($1, pogc) = pogc
     AND $2 IN (0, poid)
     AND COALESCE($3, code) = code

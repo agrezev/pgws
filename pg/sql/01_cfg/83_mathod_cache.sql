@@ -21,6 +21,6 @@
 */
 
 INSERT INTO method (code, class_id, action_id, cache_id, rvf_id) VALUES
-    ('ws.cache', 2, 1, 2, 5)
+    ('cfg.cache', 2, 1, 2, 5)
 ;
 

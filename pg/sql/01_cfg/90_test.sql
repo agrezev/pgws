@@ -17,22 +17,20 @@
     You should have received a copy of the GNU Affero General Public License
     along with PGWS.  If not, see <http://www.gnu.org/licenses/>.
 
-    Создание триггеров и настройка умолчаний для объектов пакета cfg
+    Тесты
 */
 
 /* ------------------------------------------------------------------------- */
-CREATE TRIGGER prop_is_mask BEFORE INSERT OR UPDATE ON prop
-  FOR EACH ROW EXECUTE PROCEDURE prop_calc_is_mask()
-;
+SELECT cfg.prop_attr('db', 1, 'ws.daemon.db.sql.0');
 
 /* ------------------------------------------------------------------------- */
-ALTER TABLE wsd.prop_group ALTER COLUMN pkg SET DEFAULT ws.pg_cs();
-
-ALTER TABLE wsd.prop_owner ALTER COLUMN pkg SET DEFAULT ws.pg_cs();
-
-ALTER TABLE wsd.prop_value ALTER COLUMN pkg SET DEFAULT ws.pg_cs();
+SELECT cfg.prop_info('ws.daemon.db.sql', true);
 
 /* ------------------------------------------------------------------------- */
-CREATE TRIGGER insupd BEFORE INSERT OR UPDATE ON wsd.prop_value
-  FOR EACH ROW EXECUTE PROCEDURE cfg.prop_value_insupd_trigger()
-;
+SELECT cfg.prop_owner_attr('cache', 4);
+
+/* ------------------------------------------------------------------------- */
+SELECT cfg.prop_value_list('fe', 2, 'ws.daemon.fe', false, '2013-01-01', 'FE.', '%s');
+
+/* ------------------------------------------------------------------------- */
+SELECT cfg.prop_group_value_list('db', 0, 'ws.daemon.db', false, '2013-01-01', 'DB.', '%s'); 

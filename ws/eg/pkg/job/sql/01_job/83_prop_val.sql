@@ -25,7 +25,7 @@
 INSERT INTO wsd.pkg_script_protected (pkg, code, ver, schema) VALUES ('job', :'FILE', :'VER', 'cfg');
 
 /* ------------------------------------------------------------------------- */
-INSERT INTO cfg.prop_value (pogc, poid, code,      value) VALUES
+INSERT INTO wsd.prop_value (pogc, poid, code,      value) VALUES
   ('job',   1,  'ws.daemon.mgr.listen.job',             'job_event')
 , ('job',   1,  'ws.daemon.mgr.listen.stat',            'job_stat')
 , ('job',   1,  'ws.daemon.mgr.listen.reload',          'job_reload')
