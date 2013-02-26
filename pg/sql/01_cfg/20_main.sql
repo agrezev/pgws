@@ -21,7 +21,7 @@
 */
 
 /* ------------------------------------------------------------------------- */
-INSERT INTO wsd.pkg_script_protected (pkg, code, ver) VALUES ('cfg', :'FILE', :'VER');
+INSERT INTO wsd.pkg_script_protected (pkg, code, ver, schema) VALUES ('cfg', :'FILE', :'VER', 'cfg');
 
 /* ------------------------------------------------------------------------- */
 CREATE TABLE prop (

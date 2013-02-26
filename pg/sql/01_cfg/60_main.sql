@@ -50,4 +50,4 @@ $_$
     RETURN NEW;
   END;
 $_$;
-SELECT pg_c('f', 'prop_value_insuptd_trigger', 'Проверка наличия свойства в таблице prop');
+SELECT pg_c('f', 'prop_value_insupd_trigger', 'Проверка наличия свойства в таблице prop');

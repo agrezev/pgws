@@ -21,6 +21,9 @@
 */
 
 /* ------------------------------------------------------------------------- */
+INSERT INTO wsd.pkg_script_protected (pkg, code, ver, schema) VALUES ('cfg', :'FILE', :'VER', 'cfg');
+
+/* ------------------------------------------------------------------------- */
 INSERT INTO prop (code,                 pogc_list,                  def_value, name) VALUES
 
   ('ws.daemon.db.sql.:i',               ARRAY['db'],                '',       'SQL настройки соединения с БД')
