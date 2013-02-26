@@ -17,7 +17,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with PGWS.  If not, see <http://www.gnu.org/licenses/>.
 
-    Реестр свойств. Дополнение
+    Реестр свойств. Добавление владельца
 
 */
 
@@ -25,27 +25,13 @@
 INSERT INTO wsd.pkg_script_protected (code, ver) VALUES (:'FILE', :'VER');
 
 /* ------------------------------------------------------------------------- */
-INSERT INTO wsd.prop_value (pogc, poid, code,      value) VALUES
-  ('job',   1,  'ws.daemon.mgr.listen.job',             'job_event')
-, ('job',   1,  'ws.daemon.mgr.listen.stat',            'job_stat')
-, ('job',   1,  'ws.daemon.mgr.listen.reload',          'job_reload')
-, ('job',   1,  'ws.daemon.mgr.reload_key',             'job_secret_reload')
-, ('job',   1,  'ws.daemon.startup.pm.n_processes',     '5')
-
-, ('fe',    1,  'ws.daemon.log.syslog.job.default',     '6')
-, ('fe',    1,  'ws.daemon.log.syslog.job.call',        NULL)
-, ('fe',    1,  'ws.daemon.log.syslog.job.sid',         NULL)
-, ('fe',    1,  'ws.daemon.log.syslog.job.acl',         NULL)
-, ('fe',    1,  'ws.daemon.log.syslog.job.cache',       NULL)
-, ('fe',    1,  'ws.daemon.log.syslog.job.validate',    NULL)
+INSERT INTO cfg.prop_group (pogc, sort, name) VALUES
+  ('job',   4, 'Демон Job')
 ;
 
 /* ------------------------------------------------------------------------- */
--- запуск cron
-INSERT INTO wsd.job_cron (run_at) VALUES (CURRENT_TIMESTAMP); -- должна быть одна строка
+INSERT INTO cfg.prop_owner (pogc, poid, sort, name) VALUES
+  ('job',   1,  1,  'Первичный Демон Job')
+;
 
 /* ------------------------------------------------------------------------- */
--- запуск ежедневной обработки
-SELECT
-  job.create(job.handler_id('job.today'), NULL, -2, NULL)
-;

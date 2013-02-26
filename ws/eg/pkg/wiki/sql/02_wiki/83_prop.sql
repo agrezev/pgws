@@ -17,20 +17,13 @@
     You should have received a copy of the GNU Affero General Public License
     along with PGWS.  If not, see <http://www.gnu.org/licenses/>.
 
-    Удаление данных из схемы ws
+    Реестр свойств.
 */
 
 /* ------------------------------------------------------------------------- */
-DELETE FROM cfg.prop_value WHERE pkg = :'PKG';
-DELETE FROM cfg.prop_owner WHERE pkg = :'PKG';
-DELETE FROM cfg.prop_group WHERE pkg = :'PKG';
+INSERT INTO wsd.pkg_script_protected (code, ver) VALUES (:'FILE', :'VER');
 
 /* ------------------------------------------------------------------------- */
-DROP TABLE wsd.job;
-DROP TABLE wsd.job_todo;
-DROP TABLE wsd.job_past;
-DROP TABLE wsd.job_dust;
-
-DROP SEQUENCE wsd.job_seq;
-/* ------------------------------------------------------------------------- */
-DELETE FROM wsd.pkg_script_protected WHERE pkg = :'PKG';
+INSERT INTO wsd.prop_value (pogc, poid, code,      value) VALUES
+  ('be',    1,  'ws.daemon.be.plugin.wiki.lib',          'PGWS::Plugin::Wiki')
+;
