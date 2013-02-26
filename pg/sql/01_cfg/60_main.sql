@@ -17,28 +17,28 @@
     You should have received a copy of the GNU Affero General Public License
     along with PGWS.  If not, see <http://www.gnu.org/licenses/>.
 
-    Функции триггеров
+    Функции триггеров пакета cfg
 */
 
 /* ------------------------------------------------------------------------- */
 CREATE OR REPLACE FUNCTION prop_calc_is_mask() RETURNS TRIGGER VOLATILE LANGUAGE 'plpgsql' AS
 $_$
-  -- prop_calc_is_mask: Расчет значения поля is_mask
   BEGIN
     NEW.is_mask := ws.mask_is_multi(NEW.code);
     RETURN NEW;
   END;
 $_$;
+SELECT pg_c('f', 'prop_calc_is_mask', 'Расчет значения поля is_mask');
 
 /* ------------------------------------------------------------------------- */
-CREATE OR REPLACE FUNCTION wsd_prop_value_insupd_trigger() RETURNS TRIGGER IMMUTABLE LANGUAGE 'plpgsql' AS
+CREATE OR REPLACE FUNCTION prop_value_insupd_trigger() RETURNS TRIGGER IMMUTABLE LANGUAGE 'plpgsql' AS
 $_$
   DECLARE
     v_rows INTEGER;
   BEGIN
     SELECT INTO v_rows
       count(1)
-      FROM ws.prop
+      FROM prop
       WHERE NEW.pogc = ANY(pogc_list)
         AND NEW.code ~ ws.mask2regexp(code)
     ;
@@ -50,3 +50,4 @@ $_$
     RETURN NEW;
   END;
 $_$;
+SELECT pg_c('f', 'prop_value_insuptd_trigger', 'Проверка наличия свойства в таблице prop');

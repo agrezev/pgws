@@ -24,19 +24,20 @@
 INSERT INTO wsd.pkg_script_protected (pkg, code, ver) VALUES ('cfg', :'FILE', :'VER');
 
 /* ------------------------------------------------------------------------- */
-INSERT INTO wsd.prop_group (pogc, sort, name) VALUES
+INSERT INTO prop_group (pogc, sort, name) VALUES
   ('fcgi',  3, 'Демон FastCGI')
 , ('tm',    4, 'Демон TM')
 , ('be',    2, 'Бэкенд')
 , ('fe',    1, 'Фронтенд')
 , ('db',    5, 'БД')
 ;
-INSERT INTO wsd.prop_group (pogc, sort, is_id_required, name) VALUES
+
+INSERT INTO prop_group (pogc, sort, is_id_required, name) VALUES
   ('cache', 6, FALSE, 'Кэш')
 ;
 
 /* ------------------------------------------------------------------------- */
-INSERT INTO wsd.prop_owner (pogc, poid, sort, name) VALUES
+INSERT INTO prop_owner (pogc, poid, sort, name) VALUES
   ('fcgi',  1,  1,  'Первичный Демон FastCGI')
 , ('tm',    1,  1,  'Первичный Демон TM')
 , ('be',    1,  1,  'Первичный Бэкенд')

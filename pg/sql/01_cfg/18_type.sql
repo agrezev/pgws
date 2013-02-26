@@ -17,22 +17,14 @@
     You should have received a copy of the GNU Affero General Public License
     along with PGWS.  If not, see <http://www.gnu.org/licenses/>.
 
-    Создание триггеров и настройка умолчаний для объектов пакета cfg
+    Типы данных
 */
 
 /* ------------------------------------------------------------------------- */
-CREATE TRIGGER prop_is_mask BEFORE INSERT OR UPDATE ON prop
-  FOR EACH ROW EXECUTE PROCEDURE prop_calc_is_mask()
-;
+SET LOCAL search_path = cfg, ws, i18n_def, public;
 
 /* ------------------------------------------------------------------------- */
-ALTER TABLE prop_group ALTER COLUMN pkg SET DEFAULT ws.pg_cs();
+ CREATE DOMAIN d_prop_code AS TEXT CHECK (VALUE ~ E'^([a-z\\d_]+)(\\.((:?[a-z\\d_]+)|(\\([a-z\\d_]+(,[a-z\\d_]+)+\\))))*$') ;
+COMMENT ON DOMAIN d_prop_code IS 'Код свойства';
 
-ALTER TABLE prop_owner ALTER COLUMN pkg SET DEFAULT ws.pg_cs();
 
-ALTER TABLE prop_value ALTER COLUMN pkg SET DEFAULT ws.pg_cs();
-
-/* ------------------------------------------------------------------------- */
-CREATE TRIGGER insupd BEFORE INSERT OR UPDATE ON prop_value
-  FOR EACH ROW EXECUTE PROCEDURE prop_value_insupd_trigger()
-;

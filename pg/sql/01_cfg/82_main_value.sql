@@ -24,7 +24,7 @@
 INSERT INTO wsd.pkg_script_protected (pkg, code, ver) VALUES ('cfg', :'FILE', :'VER');
 
 /* ------------------------------------------------------------------------- */
-INSERT INTO wsd.prop_value (pogc, poid, code,      value) VALUES
+INSERT INTO prop_value (pogc, poid, code,      value) VALUES
   ('db',    1,  'ws.daemon.db.sql.0',                   $_$SET datestyle TO 'German'$_$)
 , ('db',    1,  'ws.daemon.db.sql.1',                   $_$SET time zone local$_$)
 , ('fcgi',  1,  'ws.daemon.startup.sock_wait',          NULL)

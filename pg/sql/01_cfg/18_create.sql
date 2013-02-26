@@ -17,22 +17,9 @@
     You should have received a copy of the GNU Affero General Public License
     along with PGWS.  If not, see <http://www.gnu.org/licenses/>.
 
-    Создание триггеров и настройка умолчаний для объектов пакета cfg
+    Схема пакета конфигурации объектов
 */
 
 /* ------------------------------------------------------------------------- */
-CREATE TRIGGER prop_is_mask BEFORE INSERT OR UPDATE ON prop
-  FOR EACH ROW EXECUTE PROCEDURE prop_calc_is_mask()
-;
-
-/* ------------------------------------------------------------------------- */
-ALTER TABLE prop_group ALTER COLUMN pkg SET DEFAULT ws.pg_cs();
-
-ALTER TABLE prop_owner ALTER COLUMN pkg SET DEFAULT ws.pg_cs();
-
-ALTER TABLE prop_value ALTER COLUMN pkg SET DEFAULT ws.pg_cs();
-
-/* ------------------------------------------------------------------------- */
-CREATE TRIGGER insupd BEFORE INSERT OR UPDATE ON prop_value
-  FOR EACH ROW EXECUTE PROCEDURE prop_value_insupd_trigger()
-;
+CREATE SCHEMA cfg;
+COMMENT ON SCHEMA cfg IS 'Конфигурация объектов';

@@ -23,7 +23,9 @@
 /* ------------------------------------------------------------------------- */
 CREATE OR REPLACE FUNCTION prop_owner_attr(a_pogc TEXT DEFAULT NULL, a_poid INTEGER DEFAULT 0) RETURNS SETOF prop_owner_attr STABLE LANGUAGE 'sql' AS
 $_$
-  SELECT * FROM ws.prop_owner_attr
+-- a_pogc: код группы владельцев
+-- a_poid: код владельца свойства
+  SELECT * FROM prop_owner_attr
   WHERE COALESCE($1, pogc) = pogc
     AND $2 IN (0, poid)
 $_$;
@@ -32,11 +34,12 @@ SELECT pg_c('f', 'prop_owner_attr', 'Атрибуты POID');
 /* ------------------------------------------------------------------------- */
 CREATE OR REPLACE FUNCTION prop_attr(a_pogc TEXT DEFAULT NULL, a_poid INTEGER DEFAULT 0, a_code TEXT DEFAULT NULL) RETURNS SETOF prop_attr STABLE LANGUAGE 'sql' AS
 $_$
-  SELECT * FROM ws.prop_attr
+-- a_pogc: код группы владельцев
+-- a_poid: код владельца свойств
+-- a_code: код свойства
+  SELECT * FROM prop_attr
   WHERE COALESCE($1, pogc) = pogc
     AND $2 IN (0, poid)
     AND COALESCE($3, code) = code
 $_$;
 SELECT pg_c('f', 'prop_attr', 'Атрибуты Свойства');
-
-/* ------------------------------------------------------------------------- */

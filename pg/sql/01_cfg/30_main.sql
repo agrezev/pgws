@@ -21,18 +21,20 @@
 */
 
 /* ------------------------------------------------------------------------- */
-CREATE OR REPLACE FUNCTION prop_info(a_code ws.d_prop_code DEFAULT NULL, a_is_mask BOOL DEFAULT false) RETURNS SETOF prop STABLE LANGUAGE 'plpgsql' AS
+CREATE OR REPLACE FUNCTION prop_info(a_code cfg.d_prop_code DEFAULT NULL, a_is_mask BOOL DEFAULT false) RETURNS SETOF prop STABLE LANGUAGE 'plpgsql' AS
 $_$
+-- a_code: код свойства
+-- a_is_mask: признак атомарности свойства
   DECLARE
     v_code TEXT;
   BEGIN
     IF a_is_mask THEN
       v_code := COALESCE(a_code, ''); -- аргумент не может быть "''", только d_prop_code или NULL
       v_code := v_code || '%';
-      RETURN QUERY SELECT * FROM ws.prop WHERE lower(code) LIKE lower(v_code);
+      RETURN QUERY SELECT * FROM cfg.prop WHERE lower(code) LIKE lower(v_code);
     ELSE
       -- TODO: RAISE IF a_code IS NULL
-      RETURN QUERY SELECT * FROM ws.prop WHERE lower(code) = lower(a_code);
+      RETURN QUERY SELECT * FROM cfg.prop WHERE lower(code) = lower(a_code);
     END IF;
     RETURN;
   END;
@@ -43,12 +45,16 @@ SELECT pg_c('f', 'prop_info', 'Описание свойства или спис
 CREATE OR REPLACE FUNCTION prop_value(
   a_pogc TEXT
 , a_poid d_id
-, a_code ws.d_prop_code
+, a_code cfg.d_prop_code
 , a_date date DEFAULT CURRENT_DATE
 ) RETURNS text STABLE LANGUAGE 'sql' AS
 $_$
+-- a_pogc: код группы владельцев
+-- a_poid: код владельца
+-- a_code: код свойства
+-- a_date: дата получения значения свойства
   SELECT value
-    FROM wsd.prop_value
+    FROM cfg.prop_value
     WHERE pogc = $1 /* a_pogc */
       AND poid = $2 /* a_poid */
       AND code = $3 /* a_code */
@@ -69,12 +75,19 @@ CREATE OR REPLACE FUNCTION prop_value_list(
 , a_mark_default text DEFAULT '%s'
 ) RETURNS SETOF t_hashtable STABLE LANGUAGE 'sql' AS
 $_$
+-- a_pogc: код группы владельцев
+-- a_poid: код владельца
+-- a_prefix: часть кода свойства до '.'
+-- a_prefix_keep:признак замены в результате a_prefix на a_prefix_new
+-- a_date: дата получения значения свойства
+-- a_prefix_new: добавочный префикс
+-- a_mark_default: метка для не атомарного свойства
   SELECT
     $6 || CASE WHEN $3 /* a_prefix */ = '' OR $4 /* a_prefix_keep */
       THEN code
       ELSE regexp_replace (code, '^' || $3 || E'\\.', '')
     END as code
-  , COALESCE(ws.prop_value($1, $2, code, $5), ws.sprintf($7 /* a_mark_default */, def_value))
+  , COALESCE(cfg.prop_value($1, $2, code, $5), ws.sprintf($7 /* a_mark_default */, def_value))
     FROM ws.prop
     WHERE $1 = ANY(pogc_list)
       AND NOT is_mask
@@ -87,10 +100,10 @@ $_$
   , COALESCE(tmp.value, ws.sprintf($7 /* a_mark_default */, p.def_value))
     FROM (
       SELECT code, value, row_number() over (partition by pogc, poid, code order by valid_from desc)
-        FROM wsd.prop_value v
+        FROM cfg.prop_value v
         WHERE pogc = $1 AND poid = $2 AND valid_from <= COALESCE($5, CURRENT_DATE)
       ) tmp
-      , ws.prop p
+      , cfg.prop p
       WHERE tmp.row_number = 1 /* самая свежая по началу действия строка */
         AND ($3 = '' OR tmp.code ~ ws.mask2regexp(p.code))
         AND p.is_mask
@@ -110,20 +123,26 @@ CREATE OR REPLACE FUNCTION prop_group_value_list(
 , a_mark_default text DEFAULT '%s'
 ) RETURNS SETOF t_hashtable STABLE LANGUAGE 'plpgsql' AS
 $_$
+-- a_pogc: код группы владельцев
+-- a_poid: код владельца
+-- a_prefix: часть кода свойства до '.'
+-- a_prefix_keep:признак замены в результате a_prefix на a_prefix_new
+-- a_date: дата получения значения свойства
+-- a_prefix_new: добавочный префикс
+-- a_mark_default: метка для не атомарного свойства
 DECLARE
-  r wsd.prop_owner;
+  r cfg.prop_owner;
   v_prefix_add TEXT;
 BEGIN
-  FOR r IN SELECT * FROM wsd.prop_owner WHERE pogc = a_pogc AND a_poid IN (poid, 0) ORDER BY sort
+  FOR r IN SELECT * FROM cfg.prop_owner WHERE pogc = a_pogc AND a_poid IN (poid, 0) ORDER BY sort
   LOOP
     v_prefix_add := CASE
       WHEN a_poid = 0 THEN r.poid || '.'
       ELSE ''
     END;
-    RETURN QUERY SELECT * FROM ws.prop_value_list(r.pogc, r.poid, a_prefix, a_prefix_keep, a_date, a_prefix_new || v_prefix_add, a_mark_default);
+    RETURN QUERY SELECT * FROM cfg.prop_value_list(r.pogc, r.poid, a_prefix, a_prefix_keep, a_date, a_prefix_new || v_prefix_add, a_mark_default);
   END LOOP;
   RETURN;
 END;
 $_$;
-
-/* ------------------------------------------------------------------------- */
+SELECT pg_c('f', 'prop_group_value_list', 'Значения свойств по части кода (до .), в разрезе владельцев свойств');

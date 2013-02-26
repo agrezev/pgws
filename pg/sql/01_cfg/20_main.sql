@@ -50,7 +50,7 @@ SELECT pg_c('r', 'prop',        'Справочник свойств')
 CREATE INDEX prop_code ON prop USING btree(lower(code)  text_pattern_ops);
 
 /* ------------------------------------------------------------------------- */
-CREATE TABLE wsd.prop_group (
+CREATE TABLE prop_group (
   pogc            TEXT PRIMARY KEY
 , pkg             TEXT NOT NULL
 , sort            INTEGER NOT NULL
@@ -69,7 +69,7 @@ SELECT pg_c('r', 'wsd.prop_group', 'Группа владельцев свойс
 ;
 
 /* ------------------------------------------------------------------------- */
-CREATE TABLE wsd.prop_owner (
+CREATE TABLE prop_owner (
   pogc        TEXT REFERENCES wsd.prop_group
 , poid        INTEGER
 , pkg         TEXT NOT NULL
@@ -89,7 +89,7 @@ SELECT pg_c('r', 'wsd.prop_owner', 'Владельцы свойств (Property 
 ;
 
 /* ------------------------------------------------------------------------- */
-CREATE TABLE wsd.prop_value (
+CREATE TABLE prop_value (
   pogc        TEXT
 , poid        INTEGER
 , code        TEXT      -- d_prop_code REFERENCES prop
