@@ -88,7 +88,7 @@ $_$
       ELSE regexp_replace (code, '^' || $3 || E'\\.', '')
     END as code
   , COALESCE(cfg.prop_value($1, $2, code, $5), ws.sprintf($7 /* a_mark_default */, def_value))
-    FROM ws.prop
+    FROM cfg.prop
     WHERE $1 = ANY(pogc_list)
       AND NOT is_mask
       AND ($3 = '' OR code LIKE $3 || '.%')

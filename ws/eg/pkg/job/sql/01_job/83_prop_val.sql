@@ -22,7 +22,7 @@
 */
 
 /* ------------------------------------------------------------------------- */
-INSERT INTO wsd.pkg_script_protected (code, ver) VALUES (:'FILE', :'VER');
+INSERT INTO wsd.pkg_script_protected (pkg, code, ver, schema) VALUES ('job', :'FILE', :'VER', 'cfg');
 
 /* ------------------------------------------------------------------------- */
 INSERT INTO cfg.prop_value (pogc, poid, code,      value) VALUES

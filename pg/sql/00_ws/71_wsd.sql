@@ -17,21 +17,8 @@
     You should have received a copy of the GNU Affero General Public License
     along with PGWS.  If not, see <http://www.gnu.org/licenses/>.
 
-    Реестр свойств. Добавление владельца
-
+    Настройка умолчаний для объектов wsd.*
 */
 
 /* ------------------------------------------------------------------------- */
-INSERT INTO wsd.pkg_script_protected (pkg, code, ver, schema) VALUES ('job', :'FILE', :'VER', 'cfg');
-
-/* ------------------------------------------------------------------------- */
-INSERT INTO cfg.prop_group (pogc, sort, name) VALUES
-  ('job',   4, 'Демон Job')
-;
-
-/* ------------------------------------------------------------------------- */
-INSERT INTO cfg.prop_owner (pogc, poid, sort, name) VALUES
-  ('job',   1,  1,  'Первичный Демон Job')
-;
-
-/* ------------------------------------------------------------------------- */
+ALTER TABLE wsd.pkg_script_protected ALTER COLUMN pkg SET DEFAULT ws.pg_cs();

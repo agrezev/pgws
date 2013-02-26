@@ -21,7 +21,7 @@
 */
 
 /* ------------------------------------------------------------------------- */
-INSERT INTO wsd.pkg_script_protected (code, ver) VALUES (:'FILE', :'VER');
+INSERT INTO wsd.pkg_script_protected (pkg, code, ver) VALUES ('ev', :'FILE', :'VER');
 
 /* ------------------------------------------------------------------------- */
 

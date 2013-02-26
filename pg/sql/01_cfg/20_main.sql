@@ -97,7 +97,7 @@ CREATE TABLE prop_value (
 , pkg         TEXT NOT NULL
 , value       TEXT
 , CONSTRAINT  prop_value_pkey PRIMARY KEY (pogc, poid, code, valid_from)
-, CONSTRAINT  prop_value_pogc_poid_fkey FOREIGN KEY (pogc, poid) REFERENCES wsd.prop_owner
+, CONSTRAINT  prop_value_pogc_poid_fkey FOREIGN KEY (pogc, poid) REFERENCES cfg.prop_owner
 );
 
 SELECT pg_c('r', 'prop_value',       'Значения свойств объектов')

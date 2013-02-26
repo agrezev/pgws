@@ -38,7 +38,7 @@ $_$
   BEGIN
     SELECT INTO v_rows
       count(1)
-      FROM prop
+      FROM cfg.prop
       WHERE NEW.pogc = ANY(pogc_list)
         AND NEW.code ~ ws.mask2regexp(code)
     ;
