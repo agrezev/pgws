@@ -34,5 +34,5 @@ ALTER TABLE prop_value ALTER COLUMN pkg SET DEFAULT ws.pg_cs();
 
 /* ------------------------------------------------------------------------- */
 CREATE TRIGGER insupd BEFORE INSERT OR UPDATE ON prop_value
-  FOR EACH ROW EXECUTE PROCEDURE prop_value_insupd_trigger()
+  FOR EACH ROW EXECUTE PROCEDURE cfg.prop_value_insupd_trigger()
 ;

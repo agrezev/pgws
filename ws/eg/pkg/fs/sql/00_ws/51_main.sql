@@ -247,7 +247,7 @@ $_$
       RAISE EXCEPTION 'file code is required for folder %', a_folder_code;
     END IF;
     r.id := v_file_id::TEXT;
-    r.name := 'apidata/' -- TODO: move to cfg.prop_value
+    r.name := 'apidata/' -- TODO: move to wsd.prop_value
       || ws.class_code(r_folder.class_id) || '/'
       || a_obj_id::TEXT || '/'
       || r_folder.code || '/'

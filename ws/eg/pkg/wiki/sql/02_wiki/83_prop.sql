@@ -21,9 +21,9 @@
 */
 
 /* ------------------------------------------------------------------------- */
-INSERT INTO wsd.pkg_script_protected (pkg, code, ver, schema) VALUES ('wiki', :'FILE', :'VER', 'cfg');
+INSERT INTO wsd.pkg_script_protected (pkg, code, ver, schema) VALUES ('wiki', :'FILE', :'VER', 'wsd');
 
 /* ------------------------------------------------------------------------- */
-INSERT INTO cfg.prop_value (pogc, poid, code,      value) VALUES
+INSERT INTO wsd.prop_value (pogc, poid, code,      value) VALUES
   ('be',    1,  'ws.daemon.be.plugin.wiki.lib',          'PGWS::Plugin::Wiki')
 ;

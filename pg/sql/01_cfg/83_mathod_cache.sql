@@ -17,21 +17,10 @@
     You should have received a copy of the GNU Affero General Public License
     along with PGWS.  If not, see <http://www.gnu.org/licenses/>.
 
-    Реестр свойств. Добавление владельца
-
+    Регистрация методов и страниц
 */
 
-/* ------------------------------------------------------------------------- */
-INSERT INTO wsd.pkg_script_protected (pkg, code, ver, schema) VALUES ('job', :'FILE', :'VER', 'cfg');
-
-/* ------------------------------------------------------------------------- */
-INSERT INTO wsd.prop_group (pogc, sort, name) VALUES
-  ('job',   4, 'Демон Job')
+INSERT INTO method (code, class_id, action_id, cache_id, rvf_id) VALUES
+    ('ws.cache', 2, 1, 2, 5)
 ;
 
-/* ------------------------------------------------------------------------- */
-INSERT INTO wsd.prop_owner (pogc, poid, sort, name) VALUES
-  ('job',   1,  1,  'Первичный Демон Job')
-;
-
-/* ------------------------------------------------------------------------- */

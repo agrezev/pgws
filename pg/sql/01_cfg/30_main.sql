@@ -54,7 +54,7 @@ $_$
 -- a_code: код свойства
 -- a_date: дата получения значения свойства
   SELECT value
-    FROM cfg.prop_value
+    FROM wsd.prop_value
     WHERE pogc = $1 /* a_pogc */
       AND poid = $2 /* a_poid */
       AND code = $3 /* a_code */
@@ -87,7 +87,7 @@ $_$
       THEN code
       ELSE regexp_replace (code, '^' || $3 || E'\\.', '')
     END as code
-  , COALESCE(cfg.prop_value($1, $2, code, $5), ws.sprintf($7 /* a_mark_default */, def_value))
+  , COALESCE(wsd.prop_value($1, $2, code, $5), ws.sprintf($7 /* a_mark_default */, def_value))
     FROM cfg.prop
     WHERE $1 = ANY(pogc_list)
       AND NOT is_mask
@@ -100,7 +100,7 @@ $_$
   , COALESCE(tmp.value, ws.sprintf($7 /* a_mark_default */, p.def_value))
     FROM (
       SELECT code, value, row_number() over (partition by pogc, poid, code order by valid_from desc)
-        FROM cfg.prop_value v
+        FROM wsd.prop_value v
         WHERE pogc = $1 AND poid = $2 AND valid_from <= COALESCE($5, CURRENT_DATE)
       ) tmp
       , cfg.prop p
@@ -131,10 +131,10 @@ $_$
 -- a_prefix_new: добавочный префикс
 -- a_mark_default: метка для не атомарного свойства
 DECLARE
-  r cfg.prop_owner;
+  r wsd.prop_owner;
   v_prefix_add TEXT;
 BEGIN
-  FOR r IN SELECT * FROM cfg.prop_owner WHERE pogc = a_pogc AND a_poid IN (poid, 0) ORDER BY sort
+  FOR r IN SELECT * FROM wsd.prop_owner WHERE pogc = a_pogc AND a_poid IN (poid, 0) ORDER BY sort
   LOOP
     v_prefix_add := CASE
       WHEN a_poid = 0 THEN r.poid || '.'

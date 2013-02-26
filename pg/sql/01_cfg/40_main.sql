@@ -26,8 +26,8 @@ CREATE OR REPLACE VIEW prop_owner_attr AS SELECT
 , pog.is_id_required
 , pog.sort AS pog_sort
 , pog.name AS pog_name
-  FROM prop_owner po
-    JOIN prop_group AS pog USING (pogc)
+  FROM wsd.prop_owner po
+    JOIN wsd.prop_group AS pog USING (pogc)
   ORDER BY pog_sort, sort
 ;
 SELECT pg_c('v', 'prop_owner_attr', 'Владельцы свойств');
@@ -48,7 +48,7 @@ CREATE OR REPLACE VIEW prop_attr AS SELECT -- явно заданные знач
 , pv.pkg as value_pkg
 , pv.value
   FROM prop p
-  , prop_value pv
+  , wsd.prop_value pv
   WHERE pv.pogc = ANY (p.pogc_list)
     AND p.is_mask
     AND pv.code ~ ws.mask2regexp(p.code)
@@ -58,9 +58,9 @@ CREATE OR REPLACE VIEW prop_attr AS SELECT -- явно заданные знач
 , po.poid
 , '2000-01-02'::DATE AS valid_from
 , po.pkg as value_pkg
-, (SELECT value FROM prop_value WHERE pogc = po.pogc AND poid = po.poid AND code = p.code) AS value
+, (SELECT value FROM wsd.prop_value WHERE pogc = po.pogc AND poid = po.poid AND code = p.code) AS value
   FROM prop p
-  , prop_owner po
+  , wsd.prop_owner po
   WHERE po.pogc = ANY (p.pogc_list)
     AND NOT p.is_mask
   ORDER BY pogc, poid, code, valid_from
