@@ -1,19 +1,16 @@
-                                                      prop_attr
+                                                      prop_attr                                                       
 ----------------------------------------------------------------------------------------------------------------------
  (ws.daemon.db.sql.0,cfg,{db},t,"","SQL настройки соединения с БД",,,db,1,2000-01-01,cfg,"SET datestyle TO 'German'")
-(1 row)
 
-                               prop_info
+                               prop_info                               
 -----------------------------------------------------------------------
  (ws.daemon.db.sql.:i,cfg,{db},t,"","SQL настройки соединения с БД",,)
-(1 row)
 
-             prop_owner_attr
+             prop_owner_attr              
 ------------------------------------------
  (cache,4,cfg,4,"Данные сессий",,f,6,Кэш)
-(1 row)
 
-         prop_value_list
+         prop_value_list          
 ----------------------------------
  (FE.def.acl,info.acl_check)
  (FE.def.code,ws.page_by_code)
@@ -30,10 +27,9 @@
  (FE.tmpl.layout_default,style01)
  (FE.tmpl.pages,page/)
  (FE.tmpl.skin_default,default)
-(15 rows)
 
-          prop_group_value_list
+          prop_group_value_list           
 ------------------------------------------
  (DB.1.sql.0,"SET datestyle TO 'German'")
  (DB.1.sql.1,"SET time zone local")
-(2 rows)
+
