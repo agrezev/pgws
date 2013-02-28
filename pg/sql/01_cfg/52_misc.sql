@@ -21,15 +21,15 @@
 */
 
 /* ------------------------------------------------------------------------- */
-CREATE OR REPLACE FUNCTION prop_clean_pkg (a_pkg TEXT, a_wsd_clean BOOLEAN) RETURNS TEXT VOLATILE LANGUAGE 'plpgsql' AS
+CREATE OR REPLACE FUNCTION prop_clean_pkg (a_pkg TEXT, a_wsd_clean BOOLEAN) RETURNS void VOLATILE LANGUAGE 'plpgsql' AS
 $_$
 -- a_pkg: пакет для которого производится чистка
 -- a_wsd_clean: признак удаления атрибутов свойств в схеме wsd
   BEGIN
+
     -- удаление списка свойств для пакета a_pkg
     DELETE FROM cfg.prop WHERE pkg = $1;
     UPDATE cfg.prop SET pogc_list = ws.array_remove(pogc_list::text[], $1) WHERE $1 = ANY(pogc_list);
-
 
     -- удаление значений свойств и владельцев из схемы wsd
     IF $2 THEN
@@ -38,18 +38,18 @@ $_$
       DELETE FROM wsd.prop_group WHERE pkg = $1;
     END IF;
 
-    RETURN 'Ok';
   END
 $_$;
 SELECT pg_c('f', 'prop_clean_pkg', 'Удаление свойств для отдельного пакета');
 
 /* ------------------------------------------------------------------------- */
-CREATE OR REPLACE FUNCTION prop_clean_value (a_prop_value TEXT) RETURNS TEXT VOLATILE LANGUAGE 'plpgsql' AS
+CREATE OR REPLACE FUNCTION prop_clean_value (a_prop_value TEXT) RETURNS void VOLATILE LANGUAGE 'plpgsql' AS
 $_$
 -- a_prop_value: значение свойства
   BEGIN
+
     DELETE FROM wsd.prop_value WHERE code = $1;
-    RETURN 'Ok';
+
   END
 $_$;
 SELECT pg_c('f', 'prop_clean_value', 'Удаление значения свойства');
