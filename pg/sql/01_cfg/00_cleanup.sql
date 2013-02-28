@@ -30,3 +30,4 @@ ALTER TABLE wsd.prop_value ALTER COLUMN pkg DROP DEFAULT;
 
 /* ------------------------------------------------------------------------- */
 DROP TRIGGER IF EXISTS insupd ON wsd.prop_value;
+
