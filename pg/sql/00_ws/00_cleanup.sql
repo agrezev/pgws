@@ -27,3 +27,5 @@ SELECT ws.pkg_is_core_only();
 
 /* ------------------------------------------------------------------------- */
 ALTER TABLE wsd.pkg_script_protected ALTER COLUMN pkg DROP DEFAULT;
+
+
