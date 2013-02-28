@@ -21,9 +21,6 @@
 */
 
 /* ------------------------------------------------------------------------- */
-INSERT INTO wsd.pkg_script_protected (pkg, code, ver, schema) VALUES ('cfg', :'FILE', :'VER', 'cfg');
-
-/* ------------------------------------------------------------------------- */
 CREATE TABLE prop (
   code        d_prop_code PRIMARY KEY
 , pkg         TEXT NOT NULL DEFAULT ws.pg_cs()
@@ -48,4 +45,3 @@ SELECT pg_c('r', 'prop',        'Справочник свойств')
 
 -- Индекс для автокомплита и поиска
 CREATE INDEX prop_code ON prop USING btree(lower(code)  text_pattern_ops);
-

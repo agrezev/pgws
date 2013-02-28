@@ -21,16 +21,13 @@
 */
 
 /* ------------------------------------------------------------------------- */
-DELETE FROM cfg.prop_value WHERE pkg = :'PKG';
-DELETE FROM cfg.prop_owner WHERE pkg = :'PKG';
-DELETE FROM cfg.prop_group WHERE pkg = :'PKG';
-
-/* ------------------------------------------------------------------------- */
 DROP TABLE wsd.job;
 DROP TABLE wsd.job_todo;
 DROP TABLE wsd.job_past;
 DROP TABLE wsd.job_dust;
 
+/* ------------------------------------------------------------------------- */
 DROP SEQUENCE wsd.job_seq;
+
 /* ------------------------------------------------------------------------- */
 DELETE FROM wsd.pkg_script_protected WHERE pkg = :'PKG';

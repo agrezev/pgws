@@ -21,9 +21,6 @@
 */
 
 /* ------------------------------------------------------------------------- */
-INSERT INTO wsd.pkg_script_protected (pkg, code, ver, schema) VALUES ('cfg', :'FILE', :'VER', 'cfg');
-
-/* ------------------------------------------------------------------------- */
 INSERT INTO prop (code,                 pogc_list,                  def_value, name) VALUES
 
   ('ws.daemon.db.sql.:i',               ARRAY['db'],                '',       'SQL настройки соединения с БД')
@@ -134,4 +131,3 @@ INSERT INTO prop (code,                 pogc_list,                  def_value, n
 
 -- ALTER TABLE wsd.prop_value ADD CONSTRAINT prop_value_code_fkey FOREIGN KEY (code) REFERENCES job.prop(code);
 -- ALTER TABLE wsd.prop_value ADD CONSTRAINT prop_value_group_id_fkey FOREIGN KEY (group_id) REFERENCES job.prop_group(id);
-

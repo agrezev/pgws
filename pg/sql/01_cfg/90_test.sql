@@ -21,16 +21,21 @@
 */
 
 /* ------------------------------------------------------------------------- */
+SELECT ws.test('prop_attr');
 SELECT cfg.prop_attr('db', 1, 'ws.daemon.db.sql.0');
 
 /* ------------------------------------------------------------------------- */
-SELECT cfg.prop_info('ws.daemon.db.sql', true);
+SELECT ws.test('prop_info');
+SELECT * FROM cfg.prop_info('ws.daemon.db.sql', true);
 
 /* ------------------------------------------------------------------------- */
-SELECT cfg.prop_owner_attr('cache', 4);
+SELECT ws.test('prop_owner_attr');
+SELECT * FROM cfg.prop_owner_attr('cache', 4);
 
 /* ------------------------------------------------------------------------- */
-SELECT cfg.prop_value_list('fe', 2, 'ws.daemon.fe', false, '2013-01-01', 'FE.', '%s');
+SELECT ws.test('prop_value_list');
+SELECT * FROM cfg.prop_value_list('fe', 2, 'ws.daemon.fe', false, '2013-01-01', 'FE.', '%s');
 
 /* ------------------------------------------------------------------------- */
-SELECT cfg.prop_group_value_list('db', 0, 'ws.daemon.db', false, '2013-01-01', 'DB.', '%s'); 
+SELECT ws.test('prop_group_value_list');
+SELECT * FROM cfg.prop_group_value_list('db', 0, 'ws.daemon.db', false, '2013-01-01', 'DB.', '%s'); 

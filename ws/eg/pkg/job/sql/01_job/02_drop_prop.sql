@@ -17,13 +17,8 @@
     You should have received a copy of the GNU Affero General Public License
     along with PGWS.  If not, see <http://www.gnu.org/licenses/>.
 
-    Реестр свойств.
+    Удаление данных из пакета cfg
 */
 
 /* ------------------------------------------------------------------------- */
-INSERT INTO wsd.pkg_script_protected (pkg, code, ver, schema) VALUES ('wiki', :'FILE', :'VER', 'wsd');
-
-/* ------------------------------------------------------------------------- */
-INSERT INTO wsd.prop_value (pogc, poid, code,      value) VALUES
-  ('be',    1,  'ws.daemon.be.plugin.wiki.lib',          'PGWS::Plugin::Wiki')
-;
+SELECT cfg.prop_clean_pkg(:'PKG', TRUE);

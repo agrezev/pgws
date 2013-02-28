@@ -17,10 +17,13 @@
     You should have received a copy of the GNU Affero General Public License
     along with PGWS.  If not, see <http://www.gnu.org/licenses/>.
 
-    Регистрация методов и страниц
+    Реестр свойств.
 */
 
-INSERT INTO method (code, class_id, action_id, cache_id, rvf_id) VALUES
-    ('cfg.cache', 2, 1, 2, 5)
-;
+/* ------------------------------------------------------------------------- */
+INSERT INTO wsd.pkg_script_protected (code, ver) VALUES (:'FILE', :'VER');
 
+/* ------------------------------------------------------------------------- */
+INSERT INTO wsd.prop_value (pogc, poid, code,      value) VALUES
+  ('be',    1,  'ws.daemon.be.plugin.wiki.lib',          'PGWS::Plugin::Wiki')
+;

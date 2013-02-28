@@ -33,6 +33,3 @@ DROP TRIGGER notify_onupdate ON wsd.job;
 
 DROP TRIGGER handler_id_update_forbidden  ON wsd.job;
 DROP TRIGGER handler_id_update_forbidden  ON wsd.job_todo;
-
-DELETE FROM cfg.prop WHERE pkg = :'PKG';
-UPDATE cfg.prop SET pogc_list = ws.array_remove(pogc_list::text[], 'job') WHERE 'job' = ANY(pogc_list);
